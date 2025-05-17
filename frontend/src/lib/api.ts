@@ -1,16 +1,24 @@
-export async function simplifyExpressions(expressions: string[]) {
-  const response = await fetch('http://localhost:8000/simplify', {
+export async function sendExpressions(
+  operation: 'simplify' | 'expand' | 'factor' | 'differentiate' | 'integrate',
+  expressions: string[],
+  variable?: string
+) {
+  const url = `http://localhost:8000/${operation}`;
+  const payload =
+    operation === 'differentiate' || operation === 'integrate'
+      ? { expressions, variable }
+      : { expressions };
+
+  const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ expressions }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.detail || 'Simplification failed');
+    const errorData = await response.json();
+    throw new Error(errorData.detail || 'Error processing expressions');
   }
 
-  return response.json(); // [{ original: "...", simplified: "..." }]
+  return response.json();
 }
