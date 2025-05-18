@@ -40,6 +40,15 @@ export default function Main() {
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Symbolic Math Tool</h1>
 
+      <p className="text-gray-700 mb-4">
+        Enter algebraic expressions using standard math syntax. For example:
+        <code className="bg-gray-100 px-1 mx-1 rounded text-sm">x**2 + 2*x + 1</code>,
+        <code className="bg-gray-100 px-1 mx-1 rounded text-sm">sin(x)</code>,
+        <code className="bg-gray-100 px-1 mx-1 rounded text-sm">(x + 1)**2</code>.
+        Use <code className="bg-gray-100 px-1 mx-1 rounded text-sm">**</code> for powers,
+        and valid Python-style math expressions supported by SymPy.
+      </p>
+
       <ExpressionInput expressions={expressions} setExpressions={setExpressions} />
 
       <div className="mt-4 flex flex-wrap gap-4 items-center">
